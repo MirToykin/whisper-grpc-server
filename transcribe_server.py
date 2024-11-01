@@ -1,3 +1,5 @@
+import os
+
 import grpc
 from concurrent import futures
 from generated import transcribe_pb2 as transcribe_pb2
@@ -15,11 +17,14 @@ class TranscriptionServiceServicer(transcribe_pb2_grpc.TranscriptionServiceServi
         return transcribe_pb2.TranscriptionResponse(text=result['text'])
 
     def TranscribeByBinary(self, request, context):
-        # Write binary audio data to a temporary file
-        with open("temp_audio.wav", "wb") as f:
+        temp_file_path = "temp_audio.wav"
+        with open(temp_file_path, "wb") as f:
             f.write(request.audio_data)
-        result = model.transcribe("temp_audio.wav")
-        return transcribe_pb2.TranscriptionResponse(text=result['text'])
+        try:
+            result = model.transcribe(temp_file_path)
+            return transcribe_pb2.TranscriptionResponse(text=result['text'])
+        finally:
+            os.remove(temp_file_path)
 
 
 def serve():
