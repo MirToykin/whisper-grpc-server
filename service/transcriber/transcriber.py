@@ -1,6 +1,7 @@
 import os
 
 import whisper
+from whisper import Whisper
 
 from service.transcriber.abstract_classes import Transcriber
 from settings import WhisperModels
@@ -8,7 +9,7 @@ from settings import WhisperModels
 
 class WhisperTranscriber(Transcriber):
     _instance = None
-    _model: WhisperModels = None
+    _model: Whisper = None
 
     def __new__(cls, model_type: WhisperModels):
         if cls._instance is None:
