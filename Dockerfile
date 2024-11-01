@@ -5,6 +5,8 @@ WORKDIR /app
 # Copy files to the container
 COPY . /app
 
+RUN mkdir -p /app/files
+
 # Install system dependencies for Whisper
 RUN apt-get update && apt-get install -y ffmpeg
 
