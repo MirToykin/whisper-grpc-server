@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+service TranscriptionService {
+    // Endpoint to transcribe audio by file path
+    rpc TranscribeByPath (TranscribePathRequest) returns (TranscriptionResponse);
+
+    // Endpoint to transcribe audio by binary data
+    rpc TranscribeByBinary (TranscribeBinaryRequest) returns (TranscriptionResponse);
+}
+
+// Request containing the path to the audio file
+message TranscribePathRequest {
+    string file_path = 1;
+}
+
+// Request containing the binary data of the audio file
+message TranscribeBinaryRequest {
+    bytes audio_data = 1;
+}
+
+// Response containing the transcription text
+message TranscriptionResponse {
+    string text = 1;
+}
