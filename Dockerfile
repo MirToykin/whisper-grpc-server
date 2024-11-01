@@ -11,4 +11,4 @@ RUN apt-get update && apt-get install -y ffmpeg
 RUN pip install -r requirements.txt
 
 # Run the server
-CMD ["python", "transcribe_server.py"]
+CMD ["python", "run.py"]
