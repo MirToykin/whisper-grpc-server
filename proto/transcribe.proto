@@ -11,11 +11,13 @@ service TranscriptionService {
 // Request containing the path to the audio file
 message TranscribePathRequest {
     string file_path = 1;
+    optional string lang = 2;
 }
 
 // Request containing the binary data of the audio file
 message TranscribeBinaryRequest {
     bytes audio_data = 1;
+    optional string lang = 2;
 }
 
 // Response containing the transcription text

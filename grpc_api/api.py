@@ -9,9 +9,9 @@ class TranscriptionServiceServicer(transcribe_pb2_grpc.TranscriptionServiceServi
         self._transcriber = transcriber
 
     def TranscribeByPath(self, request, context):
-        text = self._transcriber.transcribe_by_path(request.file_path)
+        text = self._transcriber.transcribe_by_path(path=request.file_path, lang=request.lang)
         return transcribe_pb2.TranscriptionResponse(text=text)
 
     def TranscribeByBinary(self, request, context):
-        text = self._transcriber.transcribe_by_binary(request.audio_data)
+        text = self._transcriber.transcribe_by_binary(audio_data=request.audio_data, lang=request.lang)
         return transcribe_pb2.TranscriptionResponse(text=text)

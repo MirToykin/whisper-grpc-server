@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10transcribe.proto\"*\n\x15TranscribePathRequest\x12\x11\n\tfile_path\x18\x01 \x01(\t\"-\n\x17TranscribeBinaryRequest\x12\x12\n\naudio_data\x18\x01 \x01(\x0c\"%\n\x15TranscriptionResponse\x12\x0c\n\x04text\x18\x01 \x01(\t2\xa2\x01\n\x14TranscriptionService\x12\x42\n\x10TranscribeByPath\x12\x16.TranscribePathRequest\x1a\x16.TranscriptionResponse\x12\x46\n\x12TranscribeByBinary\x12\x18.TranscribeBinaryRequest\x1a\x16.TranscriptionResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10transcribe.proto\"F\n\x15TranscribePathRequest\x12\x11\n\tfile_path\x18\x01 \x01(\t\x12\x11\n\x04lang\x18\x02 \x01(\tH\x00\x88\x01\x01\x42\x07\n\x05_lang\"I\n\x17TranscribeBinaryRequest\x12\x12\n\naudio_data\x18\x01 \x01(\x0c\x12\x11\n\x04lang\x18\x02 \x01(\tH\x00\x88\x01\x01\x42\x07\n\x05_lang\"%\n\x15TranscriptionResponse\x12\x0c\n\x04text\x18\x01 \x01(\t2\xa2\x01\n\x14TranscriptionService\x12\x42\n\x10TranscribeByPath\x12\x16.TranscribePathRequest\x1a\x16.TranscriptionResponse\x12\x46\n\x12TranscribeByBinary\x12\x18.TranscribeBinaryRequest\x1a\x16.TranscriptionResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -32,11 +32,11 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'transcribe_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
   _globals['_TRANSCRIBEPATHREQUEST']._serialized_start=20
-  _globals['_TRANSCRIBEPATHREQUEST']._serialized_end=62
-  _globals['_TRANSCRIBEBINARYREQUEST']._serialized_start=64
-  _globals['_TRANSCRIBEBINARYREQUEST']._serialized_end=109
-  _globals['_TRANSCRIPTIONRESPONSE']._serialized_start=111
-  _globals['_TRANSCRIPTIONRESPONSE']._serialized_end=148
-  _globals['_TRANSCRIPTIONSERVICE']._serialized_start=151
-  _globals['_TRANSCRIPTIONSERVICE']._serialized_end=313
+  _globals['_TRANSCRIBEPATHREQUEST']._serialized_end=90
+  _globals['_TRANSCRIBEBINARYREQUEST']._serialized_start=92
+  _globals['_TRANSCRIBEBINARYREQUEST']._serialized_end=165
+  _globals['_TRANSCRIPTIONRESPONSE']._serialized_start=167
+  _globals['_TRANSCRIPTIONRESPONSE']._serialized_end=204
+  _globals['_TRANSCRIPTIONSERVICE']._serialized_start=207
+  _globals['_TRANSCRIPTIONSERVICE']._serialized_end=369
 # @@protoc_insertion_point(module_scope)
