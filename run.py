@@ -4,7 +4,7 @@ from settings import WhisperModels
 
 
 def start_grpc_server():
-    transcriber = WhisperTranscriber(WhisperModels.TINY)
+    transcriber = WhisperTranscriber(WhisperModels.SMALL)
     serve(transcriber)
 
 
