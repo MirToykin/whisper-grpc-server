@@ -8,4 +8,4 @@ with ```from generated import transcribe_pb2 as transcribe__pb2```
 Build: ```docker build -t mirtoykin/python-whisper:tiny .```   
 Login: ```docker login```   
 Push: ```docker push mirtoykin/python-whisper:tiny```  
-Run: ```docker run -p 50052:50051 mirtoykin/python-whisper:tiny```
+Run: ```docker run --name whisper-tiny -p 50052:50051 mirtoykin/python-whisper:tiny```
