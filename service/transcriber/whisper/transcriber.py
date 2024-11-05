@@ -1,4 +1,5 @@
 import os
+import sys
 
 import whisper
 from whisper import Whisper
@@ -30,5 +31,14 @@ class WhisperTranscriber(Transcriber):
             return result['text']
         finally:
             os.remove(temp_file_path)
+
+    @staticmethod
+    def new(model_type: str):
+        model = WhisperModels.from_string(model_type)
+        if not model:
+            print("Unsupported whisper model")
+            sys.exit(1)
+
+        return WhisperTranscriber(model)
 
 
