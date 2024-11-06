@@ -32,7 +32,7 @@ def download_audio(url, save_path):
         file.write(response.content)
 
 
-def is_url(path):
+def is_url_path(path):
     parsed = urlparse(path)
     return bool(parsed.scheme and parsed.netloc)
 

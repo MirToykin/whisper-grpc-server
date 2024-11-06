@@ -5,7 +5,7 @@ import json
 from vosk import Model, KaldiRecognizer
 
 from service.transcriber.abstract_classes import Transcriber
-from service.transcriber.vosk.helpers import is_wav_file, get_wav_path, get_temp_file_name, is_url, download_audio, \
+from service.transcriber.vosk.helpers import is_wav_file, get_wav_path, get_temp_file_name, is_url_path, download_audio, \
     get_file_extension_from_url
 
 
@@ -20,20 +20,19 @@ class VoskTranscriber(Transcriber):
         return cls._instance
 
     def transcribe_by_path(self, path: str, lang: str = None) -> str:
-        if is_url(path):
+        is_url = is_url_path(path)
+        if is_url:
             local_path = get_temp_file_name(base_name="source", ext=get_file_extension_from_url(path))
             download_audio(path, local_path)
             path = local_path
 
-        tmp = False
         if not is_wav_file(path):
             path = get_wav_path(path)
-            tmp = True
 
         transcription = self._handle_wave_file(path)
-
-        if tmp:
-            os.remove(path)
+        os.remove(path)
+        if is_url:
+            os.remove(local_path)
 
         return transcription
 
