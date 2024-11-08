@@ -6,6 +6,7 @@ WORKDIR /app
 COPY . /app
 
 RUN mkdir -p /app/files
+RUN mkdir -p /app/vosk
 
 # Install system dependencies for Whisper
 RUN apt-get update && apt-get install -y ffmpeg

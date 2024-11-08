@@ -8,7 +8,7 @@ with ```from generated import transcribe_pb2 as transcribe__pb2```
 Build: ```docker build -t mirtoykin/python-grpc-stt:latest .```   
 Login: ```docker login```   
 Push: ```docker push mirtoykin/python-grpc-stt:latest```  
-Run: ```docker run --name transcriber --env-file opt/transcriber/.env -v /opt/transcriber/vosk:/root/.cache/vosk -p 50052:50051 mirtoykin/python-grpc-stt:latest```
+Run: ```docker run --name transcriber --env-file /opt/transcriber/.env -v /opt/transcriber/vosk:/root/.cache/vosk -p 50052:50051 mirtoykin/python-grpc-stt:latest```
 
 ### Environment
 * SERVER_PORT - port to run gRPC server on
