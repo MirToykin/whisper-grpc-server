@@ -12,5 +12,4 @@ Run: ```docker run --name transcriber --env-file /opt/transcriber/.env -v /opt/t
 
 ### Environment
 * SERVER_PORT - port to run gRPC server on
-* WHISPER_MODEL_TYPE - type of Whisper model (```tiny```, ```base```, ```small```, ```medium``` or ```large```)
 * VOSK_MODEL_PATH - path to Vosk model to use
