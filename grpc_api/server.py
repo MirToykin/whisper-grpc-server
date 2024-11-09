@@ -38,6 +38,8 @@ def serve():
         server.start()
         logger.info(f"gRPC server is running on port {port}...")
         server.wait_for_termination()
+    except KeyboardInterrupt:
+        logger.info(f"server stopped")
     except Exception as e:
         logger.error(f"failed to run server: {str(e)}")
         sys.exit(1)
