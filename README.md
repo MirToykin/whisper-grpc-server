@@ -13,3 +13,4 @@ Run: ```docker run --name transcriber --env-file /opt/transcriber/.env -v /opt/t
 ### Environment
 * SERVER_PORT - port to run gRPC server on
 * VOSK_MODEL_PATH - path to Vosk model to use
+* LOG_LEVEL - level of logging (CRITICAL,FATAL,ERROR,WARN,WARNING,INFO,DEBUG,NOTSET)

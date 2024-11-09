@@ -1,23 +1,50 @@
 import os
+import logging
 
 import wave
 import json
+from typing import List
+
 from vosk import Model, KaldiRecognizer
 
 from service.transcriber.abstract_classes import Transcriber
 from service.transcriber.vosk.helpers import is_wav_file, get_wav_path, get_temp_file_name, is_url_path, download_audio, \
     get_file_extension_from_url
+from settings import ModelData
+
+logger = logging.getLogger(__name__)
 
 
 class VoskTranscriber(Transcriber):
     _instance = None
-    _model: Model = None
+    _models: dict[str, Model] = None
 
-    def __new__(cls, model_path: str):
+    def __new__(cls, models_data: List[ModelData]):
+        if len(models_data) == 0:
+            raise Exception("VoskTranscriber: models data is not provided")
+
         if cls._instance is None:
             cls._instance: VoskTranscriber = super(VoskTranscriber, cls).__new__(cls)
-            cls._instance._model = Model(model_path=model_path, lang="ru")
+            cls._instance._load_models(models_data=models_data)
+
         return cls._instance
+
+    def _load_models(self, models_data: List[ModelData]):
+        models = {}
+        for m in models_data:
+            lang = m.get("lang")
+            model = m.get("model")
+
+            if not (lang and model):
+                logger.warning(f"Invalid model data, lang: {lang}, model: {model}")
+
+            models[lang] = Model(model_path=model, lang=lang)
+
+        if not models:
+            raise Exception("failed to load Vosk models")
+
+        logger.debug(f"Loaded Vosk models: {models}")
+        self._models = models
 
     def transcribe_by_path(self, path: str, lang: str = None) -> str:
         is_url = is_url_path(path)
@@ -29,7 +56,7 @@ class VoskTranscriber(Transcriber):
         if not is_wav_file(path):
             path = get_wav_path(path)
 
-        transcription = self._handle_wave_file(path)
+        transcription = self._handle_wave_file(path=path, model=self._get_model_by_lang(lang))
         os.remove(path)
         if is_url:
             os.remove(local_path)
@@ -41,11 +68,21 @@ class VoskTranscriber(Transcriber):
         with open(temp_file_path, "wb") as f:
             f.write(audio_data)
         try:
-            return self._handle_wave_file(temp_file_path)
+            return self._handle_wave_file(path=temp_file_path, model=self._get_model_by_lang(lang))
         finally:
             os.remove(temp_file_path)
 
-    def _handle_wave_file(self, path: str) -> str:
+    def _get_model_by_lang(self, lang: str | None) -> Model:
+        if not lang:
+            lang = "default"
+
+        model = self._models.get(lang, None)
+        if not Model:
+            raise Exception(f'model for language "{lang}" not found')
+
+        return model
+
+    def _handle_wave_file(self, path: str, model: Model) -> str:
         with wave.open(path, "rb") as wf:
             ch_count = wf.getnchannels() != 1
             samp_width = wf.getsampwidth() != 2
@@ -56,7 +93,7 @@ class VoskTranscriber(Transcriber):
                     f"Channels: {ch_count}, sample width: {samp_width}, compression: {compression_type}")
                 return ""
 
-            recognizer = KaldiRecognizer(self._model, wf.getframerate())
+            recognizer = KaldiRecognizer(model, wf.getframerate())
             data = wf.readframes(wf.getnframes())
 
             # Run transcription
@@ -68,7 +105,3 @@ class VoskTranscriber(Transcriber):
                 transcription = json.loads(final_result).get("text", "")
 
             return transcription
-
-    @staticmethod
-    def new(model_path):
-        return VoskTranscriber(model_path=model_path)
