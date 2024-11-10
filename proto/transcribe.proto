@@ -28,6 +28,9 @@ message TranscribeByBinaryRequest {
 // Response containing the transcription text
 message TranscriptionResponse {
     string text = 1;
+    bool status = 2;
+    int32 error_code = 3;
+    string error_description = 4;
 }
 
 // Response containing the available languages list

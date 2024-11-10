@@ -8,8 +8,9 @@ from typing import List
 from vosk import Model, KaldiRecognizer
 
 from service.transcriber.abstract_classes import Transcriber
-from service.transcriber.vosk.helpers import is_wav_file, get_wav_path, get_temp_file_name, is_url_path, download_audio, \
-    get_file_extension_from_url
+from service.transcriber.errors import TranscriptionError
+from service.transcriber.vosk.utils import is_wav_file, get_wav_path, get_temp_file_name, is_url_path, download_audio, \
+    get_file_extension_from_url, handle_exceptions
 from settings import ModelData
 
 logger = logging.getLogger(__name__)
@@ -29,6 +30,7 @@ class VoskTranscriber(Transcriber):
 
         return cls._instance
 
+    @handle_exceptions
     def transcribe_by_path(self, path: str, lang: str = None) -> str:
         is_url = is_url_path(path)
         if is_url:
@@ -46,7 +48,11 @@ class VoskTranscriber(Transcriber):
 
         return transcription
 
+    @handle_exceptions
     def transcribe_by_binary(self, audio_data: bytes, lang: str = None) -> str:
+        if len(audio_data) == 0:
+            raise TranscriptionError("empty data", error_code=400)
+
         temp_file_path = get_temp_file_name()
         with open(temp_file_path, "wb") as f:
             f.write(audio_data)
@@ -55,6 +61,7 @@ class VoskTranscriber(Transcriber):
         finally:
             os.remove(temp_file_path)
 
+    @handle_exceptions
     def get_available_languages(self) -> List[str]:
         return list(self._models.keys())
 

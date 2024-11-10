@@ -25,7 +25,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10transcribe.proto\x1a\x1bgoogle/protobuf/empty.proto\"H\n\x17TranscribeByPathRequest\x12\x11\n\tfile_path\x18\x01 \x01(\t\x12\x11\n\x04lang\x18\x02 \x01(\tH\x00\x88\x01\x01\x42\x07\n\x05_lang\"K\n\x19TranscribeByBinaryRequest\x12\x12\n\naudio_data\x18\x01 \x01(\x0c\x12\x11\n\x04lang\x18\x02 \x01(\tH\x00\x88\x01\x01\x42\x07\n\x05_lang\"%\n\x15TranscriptionResponse\x12\x0c\n\x04text\x18\x01 \x01(\t\"/\n\x1a\x41vailableLanguagesResponse\x12\x11\n\tlanguages\x18\x01 \x03(\t2\xf4\x01\n\x14TranscriptionService\x12\x44\n\x10TranscribeByPath\x12\x18.TranscribeByPathRequest\x1a\x16.TranscriptionResponse\x12H\n\x12TranscribeByBinary\x12\x1a.TranscribeByBinaryRequest\x1a\x16.TranscriptionResponse\x12L\n\x15GetAvailableLanguages\x12\x16.google.protobuf.Empty\x1a\x1b.AvailableLanguagesResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10transcribe.proto\x1a\x1bgoogle/protobuf/empty.proto\"H\n\x17TranscribeByPathRequest\x12\x11\n\tfile_path\x18\x01 \x01(\t\x12\x11\n\x04lang\x18\x02 \x01(\tH\x00\x88\x01\x01\x42\x07\n\x05_lang\"K\n\x19TranscribeByBinaryRequest\x12\x12\n\naudio_data\x18\x01 \x01(\x0c\x12\x11\n\x04lang\x18\x02 \x01(\tH\x00\x88\x01\x01\x42\x07\n\x05_lang\"d\n\x15TranscriptionResponse\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\x08\x12\x12\n\nerror_code\x18\x03 \x01(\x05\x12\x19\n\x11\x65rror_description\x18\x04 \x01(\t\"/\n\x1a\x41vailableLanguagesResponse\x12\x11\n\tlanguages\x18\x01 \x03(\t2\xf4\x01\n\x14TranscriptionService\x12\x44\n\x10TranscribeByPath\x12\x18.TranscribeByPathRequest\x1a\x16.TranscriptionResponse\x12H\n\x12TranscribeByBinary\x12\x1a.TranscribeByBinaryRequest\x1a\x16.TranscriptionResponse\x12L\n\x15GetAvailableLanguages\x12\x16.google.protobuf.Empty\x1a\x1b.AvailableLanguagesResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -37,9 +37,9 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_TRANSCRIBEBYBINARYREQUEST']._serialized_start=123
   _globals['_TRANSCRIBEBYBINARYREQUEST']._serialized_end=198
   _globals['_TRANSCRIPTIONRESPONSE']._serialized_start=200
-  _globals['_TRANSCRIPTIONRESPONSE']._serialized_end=237
-  _globals['_AVAILABLELANGUAGESRESPONSE']._serialized_start=239
-  _globals['_AVAILABLELANGUAGESRESPONSE']._serialized_end=286
-  _globals['_TRANSCRIPTIONSERVICE']._serialized_start=289
-  _globals['_TRANSCRIPTIONSERVICE']._serialized_end=533
+  _globals['_TRANSCRIPTIONRESPONSE']._serialized_end=300
+  _globals['_AVAILABLELANGUAGESRESPONSE']._serialized_start=302
+  _globals['_AVAILABLELANGUAGESRESPONSE']._serialized_end=349
+  _globals['_TRANSCRIPTIONSERVICE']._serialized_start=352
+  _globals['_TRANSCRIPTIONSERVICE']._serialized_end=596
 # @@protoc_insertion_point(module_scope)
