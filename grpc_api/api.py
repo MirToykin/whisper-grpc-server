@@ -27,4 +27,6 @@ class TranscriptionServiceServicer(transcribe_pb2_grpc.TranscriptionServiceServi
         text = self._transcriber.transcribe_by_binary(audio_data=audio_data, lang=lang)
         logger.debug(f"TranscribeByBinary result: {text}")
         return transcribe_pb2.TranscriptionResponse(text=text)
-    
+
+    def GetAvailableLanguages(self, request, context):
+        return transcribe_pb2.AvailableLanguagesResponse(languages=self._transcriber.get_available_languages())

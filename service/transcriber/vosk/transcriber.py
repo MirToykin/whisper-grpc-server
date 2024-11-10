@@ -29,23 +29,6 @@ class VoskTranscriber(Transcriber):
 
         return cls._instance
 
-    def _load_models(self, models_data: List[ModelData]):
-        models = {}
-        for m in models_data:
-            lang = m.get("lang")
-            model = m.get("model")
-
-            if not (lang and model):
-                logger.warning(f"Invalid model data, lang: {lang}, model: {model}")
-
-            models[lang] = Model(model_path=model, lang=lang)
-
-        if not models:
-            raise Exception("failed to load Vosk models")
-
-        logger.debug(f"Loaded Vosk models: {models}")
-        self._models = models
-
     def transcribe_by_path(self, path: str, lang: str = None) -> str:
         is_url = is_url_path(path)
         if is_url:
@@ -71,6 +54,9 @@ class VoskTranscriber(Transcriber):
             return self._handle_wave_file(path=temp_file_path, model=self._get_model_by_lang(lang))
         finally:
             os.remove(temp_file_path)
+
+    def get_available_languages(self) -> List[str]:
+        return list(self._models.keys())
 
     def _get_model_by_lang(self, lang: str | None) -> Model:
         if not lang:
@@ -105,3 +91,20 @@ class VoskTranscriber(Transcriber):
                 transcription = json.loads(final_result).get("text", "")
 
             return transcription
+
+    def _load_models(self, models_data: List[ModelData]):
+        models = {}
+        for m in models_data:
+            lang = m.get("lang")
+            model = m.get("model")
+
+            if not (lang and model):
+                logger.warning(f"Invalid model data, lang: {lang}, model: {model}")
+
+            models[lang] = Model(model_path=model, lang=lang)
+
+        if not models:
+            raise Exception("failed to load Vosk models")
+
+        logger.debug(f"Loaded Vosk models: {models}")
+        self._models = models

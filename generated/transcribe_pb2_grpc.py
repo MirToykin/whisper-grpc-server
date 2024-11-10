@@ -3,6 +3,7 @@
 import grpc
 import warnings
 
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from generated import transcribe_pb2 as transcribe__pb2
 
 GRPC_GENERATED_VERSION = '1.67.1'
@@ -36,13 +37,18 @@ class TranscriptionServiceStub(object):
         """
         self.TranscribeByPath = channel.unary_unary(
                 '/TranscriptionService/TranscribeByPath',
-                request_serializer=transcribe__pb2.TranscribePathRequest.SerializeToString,
+                request_serializer=transcribe__pb2.TranscribeByPathRequest.SerializeToString,
                 response_deserializer=transcribe__pb2.TranscriptionResponse.FromString,
                 _registered_method=True)
         self.TranscribeByBinary = channel.unary_unary(
                 '/TranscriptionService/TranscribeByBinary',
-                request_serializer=transcribe__pb2.TranscribeBinaryRequest.SerializeToString,
+                request_serializer=transcribe__pb2.TranscribeByBinaryRequest.SerializeToString,
                 response_deserializer=transcribe__pb2.TranscriptionResponse.FromString,
+                _registered_method=True)
+        self.GetAvailableLanguages = channel.unary_unary(
+                '/TranscriptionService/GetAvailableLanguages',
+                request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+                response_deserializer=transcribe__pb2.AvailableLanguagesResponse.FromString,
                 _registered_method=True)
 
 
@@ -63,18 +69,30 @@ class TranscriptionServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetAvailableLanguages(self, request, context):
+        """Endpoint to get available languages list
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_TranscriptionServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'TranscribeByPath': grpc.unary_unary_rpc_method_handler(
                     servicer.TranscribeByPath,
-                    request_deserializer=transcribe__pb2.TranscribePathRequest.FromString,
+                    request_deserializer=transcribe__pb2.TranscribeByPathRequest.FromString,
                     response_serializer=transcribe__pb2.TranscriptionResponse.SerializeToString,
             ),
             'TranscribeByBinary': grpc.unary_unary_rpc_method_handler(
                     servicer.TranscribeByBinary,
-                    request_deserializer=transcribe__pb2.TranscribeBinaryRequest.FromString,
+                    request_deserializer=transcribe__pb2.TranscribeByBinaryRequest.FromString,
                     response_serializer=transcribe__pb2.TranscriptionResponse.SerializeToString,
+            ),
+            'GetAvailableLanguages': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetAvailableLanguages,
+                    request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                    response_serializer=transcribe__pb2.AvailableLanguagesResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -102,7 +120,7 @@ class TranscriptionService(object):
             request,
             target,
             '/TranscriptionService/TranscribeByPath',
-            transcribe__pb2.TranscribePathRequest.SerializeToString,
+            transcribe__pb2.TranscribeByPathRequest.SerializeToString,
             transcribe__pb2.TranscriptionResponse.FromString,
             options,
             channel_credentials,
@@ -129,8 +147,35 @@ class TranscriptionService(object):
             request,
             target,
             '/TranscriptionService/TranscribeByBinary',
-            transcribe__pb2.TranscribeBinaryRequest.SerializeToString,
+            transcribe__pb2.TranscribeByBinaryRequest.SerializeToString,
             transcribe__pb2.TranscriptionResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetAvailableLanguages(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/TranscriptionService/GetAvailableLanguages',
+            google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            transcribe__pb2.AvailableLanguagesResponse.FromString,
             options,
             channel_credentials,
             insecure,

@@ -1,21 +1,26 @@
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
+
 service TranscriptionService {
     // Endpoint to transcribe audio by file path
-    rpc TranscribeByPath (TranscribePathRequest) returns (TranscriptionResponse);
+    rpc TranscribeByPath (TranscribeByPathRequest) returns (TranscriptionResponse);
 
     // Endpoint to transcribe audio by binary data
-    rpc TranscribeByBinary (TranscribeBinaryRequest) returns (TranscriptionResponse);
+    rpc TranscribeByBinary (TranscribeByBinaryRequest) returns (TranscriptionResponse);
+
+    // Endpoint to get available languages list
+    rpc GetAvailableLanguages (google.protobuf.Empty) returns (AvailableLanguagesResponse);
 }
 
 // Request containing the path to the audio file
-message TranscribePathRequest {
+message TranscribeByPathRequest {
     string file_path = 1;
     optional string lang = 2;
 }
 
 // Request containing the binary data of the audio file
-message TranscribeBinaryRequest {
+message TranscribeByBinaryRequest {
     bytes audio_data = 1;
     optional string lang = 2;
 }
@@ -23,4 +28,9 @@ message TranscribeBinaryRequest {
 // Response containing the transcription text
 message TranscriptionResponse {
     string text = 1;
+}
+
+// Response containing the available languages list
+message AvailableLanguagesResponse {
+    repeated string languages = 1;
 }
